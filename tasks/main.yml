@@ -1,0 +1,36 @@
+---
+- name: Create the directory {{ APP_SRC }}
+  file:
+    name: "{{ APP_SRC }}"
+    state: directory
+- name: Check for the {{ APP_NAME }} README file
+  stat:
+    path: "{{ APP_SRC }}/README.md"
+  register: APP_README_PATH
+- name: Clone the {{ APP_REPO }} source code into {{ APP_SRC }}
+  git:
+    repo: "{{ APP_REPO }}"
+    dest: "{{ APP_SRC }}"
+    version: "{{ APP_TAG }}"
+  when: not APP_README_PATH.stat.exists
+- name: Run the autogen.sh script in {{ APP_SRC }}
+  shell:
+    cmd: ./autogen.sh
+    chdir: "{{ APP_SRC }}"
+- name: Run the configure script in {{ APP_SRC }}
+  shell:
+    cmd: ./configure
+    chdir: "{{ APP_SRC }}"
+- name: Make the source code in {{ APP_SRC }}
+  shell:
+    cmd: make
+    chdir: "{{ APP_SRC }}"
+- name: Sudo make the source code in {{ APP_SRC }}
+  shell:
+    cmd: make install
+    chdir: "{{ APP_SRC }}"
+- name: Create the launcher /usr/share/applications/{{ APP_NAME }}.desktop
+  template:
+    src: app.desktop
+    dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/{{ APP_NAME }}.desktop"
+
