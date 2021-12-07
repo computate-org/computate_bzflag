@@ -1,22 +1,16 @@
 
-# Install the micropolis ansible role
+# Install the bzflag ansible role
 
 ```bash
 # Create a directory for the ansible role. 
-install -d ~/.ansible/roles/computate.computate_micropolis
+install -d ~/.ansible/roles/computate.computate_bzflag
 
-# Clone the micropolis ansible role. 
-git clone git@github.com:computate-org/computate_micropolis.git ~/.ansible/roles/computate.computate_micropolis
-cd ~/.ansible/roles/computate.computate_micropolis
+# Clone the bzflag ansible role. 
+git clone git@github.com:computate-org/computate_bzflag.git ~/.ansible/roles/computate.computate_bzflag
+cd ~/.ansible/roles/computate.computate_bzflag
 ```
 
-# Install the prerequisite packages
-
-```bash
-pkcon install -y c-ares-devel
-```
-
-# Run the micropolis ansible playbook to install micropolis locally (requires sudo privileges with -K). 
+# Run the bzflag ansible playbook to install bzflag locally (requires sudo privileges with -K). 
 
 ```bash
 ansible-playbook -K install.yml

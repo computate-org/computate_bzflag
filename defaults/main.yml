@@ -1,11 +1,29 @@
 ---
 APP_PYTHON: "{{ '/usr/bin/python' if lookup('file', '/usr/bin/python', errors='ignore') else '/usr/bin/python3' }}"
+APP_DEPENDENCIES_REDHAT:
+  - glew-devel
+  - libGLEW
+  - c-ares-devel
+  - libcurl-devel
+  - mesa-libGL-devel
+  - mesa-libGLU
+  - zlib-devel
+APP_DEPENDENCIES: "{{ APP_DEPENDENCIES_REDHAT if ansible_distribution_file_variety == 'RedHat' else APP_DEPENDENCIES_REDHAT }}"
 APP_NAME: bzflag
 APP_DISPLAY_NAME: BZ Flag
-APP_COMMENT: BZ Flag
+APP_GENERIC_NAME: Tank Battle Game
+APP_COMMENT: Battle enemy tanks
 APP_USER: "{{ lookup('env', 'USER') }}"
 APP_GROUP: "{{ APP_USER }}"
-APP_SRC: "{{ lookup('env', 'HOME') }}/.local/src/{{ APP_NAME  }}"
+APP_PREFIX: "{{ lookup('env', 'HOME') }}/.local"
+APP_SRC: "{{ APP_PREFIX }}/src/{{ APP_NAME  }}"
+APP_SHARE: "{{ APP_PREFIX }}/share/{{ APP_NAME  }}"
 APP_REPO: git@github.com:BZFlag-Dev/bzflag.git
 APP_TAG: v2.4.22
+APP_DESKTOP: "{{ lookup('env', 'HOME') }}/.local/share/applications/{{ APP_NAME }}.desktop"
+APP_README: "{{ APP_SRC }}/README.md"
+APP_ICON: "{{ APP_SHARE }}/red_icon.png"
+APP_EXEC: "{{ APP_PREFIX }}/bin/bzflag"
+APP_KEYWORDS: "capture;flag;tank;game;multiplayer;network;"
+APP_CATEGORIES: "Game;ActionGame;"
 

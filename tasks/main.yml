@@ -1,36 +1,39 @@
 ---
-- name: Create the directory {{ APP_SRC }}
+- name: "Install dependencies: {{ APP_DEPENDENCIES | join(' ') }}"
+  shell: "pkcon install -y {{ item }} | true"
+  loop: "{{ APP_DEPENDENCIES }}"
+- name: "Create the directory {{ APP_SRC }}"
   file:
     name: "{{ APP_SRC }}"
     state: directory
-- name: Check for the {{ APP_NAME }} README file
+- name: "Check for the README file {{ APP_README }}"
   stat:
-    path: "{{ APP_SRC }}/README.md"
+    path: "{{ APP_README }}"
   register: APP_README_PATH
-- name: Clone the {{ APP_REPO }} source code into {{ APP_SRC }}
+- name: "Clone the {{ APP_REPO }} source code into {{ APP_SRC }}"
   git:
     repo: "{{ APP_REPO }}"
     dest: "{{ APP_SRC }}"
     version: "{{ APP_TAG }}"
   when: not APP_README_PATH.stat.exists
-- name: Run the autogen.sh script in {{ APP_SRC }}
+- name: "Run the autogen.sh script in {{ APP_SRC }}"
   shell:
     cmd: ./autogen.sh
     chdir: "{{ APP_SRC }}"
-- name: Run the configure script in {{ APP_SRC }}
+- name: "Run the configure script in {{ APP_SRC }}"
   shell:
-    cmd: ./configure
+    cmd: "./configure --prefix {{ APP_PREFIX }}"
     chdir: "{{ APP_SRC }}"
-- name: Make the source code in {{ APP_SRC }}
+- name: "Run the make script in {{ APP_SRC }}"
   shell:
     cmd: make
     chdir: "{{ APP_SRC }}"
-- name: Sudo make the source code in {{ APP_SRC }}
+- name: "Run the make install script in {{ APP_SRC }}"
   shell:
     cmd: make install
     chdir: "{{ APP_SRC }}"
-- name: Create the launcher /usr/share/applications/{{ APP_NAME }}.desktop
+- name: "Create the launcher {{ APP_DESKTOP }}"
   template:
     src: app.desktop
-    dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/{{ APP_NAME }}.desktop"
+    dest: "{{ APP_DESKTOP }}"
 
