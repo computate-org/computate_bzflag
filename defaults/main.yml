@@ -1,6 +1,10 @@
 ---
 APP_PYTHON: "{{ '/usr/bin/python' if lookup('file', '/usr/bin/python', errors='ignore') else '/usr/bin/python3' }}"
 APP_DEPENDENCIES_REDHAT:
+  - SDL-devel
+  - SDL
+  - SDL2-devel
+  - SDL2
   - glew-devel
   - libGLEW
   - c-ares-devel

@@ -1,4 +1,6 @@
 ---
+- name: "Install powertools dependencies: dnf-plugins-core"
+  shell: "pkcon install -y dnf-plugins-core | true"
 - name: "Install dependencies: {{ APP_DEPENDENCIES | join(' ') }}"
   shell: "pkcon install -y {{ item }} | true"
   loop: "{{ APP_DEPENDENCIES }}"
@@ -36,4 +38,5 @@
   template:
     src: app.desktop
     dest: "{{ APP_DESKTOP }}"
+    mode: 0775
 
