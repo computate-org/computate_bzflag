@@ -10,9 +10,9 @@ git clone git@github.com:computate-org/computate_bzflag.git ~/.ansible/roles/com
 cd ~/.ansible/roles/computate.computate_bzflag
 ```
 
-# Run the bzflag ansible playbook to install bzflag locally (requires sudo privileges with -K). 
+# Run the bzflag ansible playbook to install bzflag locally. 
 
 ```bash
-ansible-playbook -K install.yml
+ansible-playbook install.yml
 ```
 
