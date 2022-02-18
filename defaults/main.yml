@@ -31,7 +31,7 @@ APP_SRC: "{{ APP_PREFIX }}/src/{{ APP_NAME  }}"
 APP_SHARE: "{{ APP_PREFIX }}/share/{{ APP_NAME  }}"
 APP_REPO: git@github.com:BZFlag-Dev/bzflag.git
 APP_TAG: v2.4.22
-APP_DESKTOP: "{{ lookup('env', 'HOME') }}/.local/share/applications/{{ APP_NAME }}.desktop"
+APP_DESKTOP: "{{ APP_PREFIX }}/share/applications/{{ APP_NAME }}.desktop"
 APP_README: "{{ APP_SRC }}/README.md"
 APP_ICON: "{{ APP_SHARE }}/red_icon.png"
 APP_EXEC: "{{ APP_PREFIX }}/bin/bzflag"
