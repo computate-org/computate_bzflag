@@ -12,6 +12,13 @@ APP_DEPENDENCIES_REDHAT:
   - mesa-libGL-devel
   - mesa-libGLU
   - zlib-devel
+  - autogen
+  - autoconf
+  - automake
+  - libtool
+  - gcc
+  - gcc-c++
+  - make
 APP_DEPENDENCIES: "{{ APP_DEPENDENCIES_REDHAT if ansible_distribution_file_variety == 'RedHat' else APP_DEPENDENCIES_REDHAT }}"
 APP_NAME: bzflag
 APP_DISPLAY_NAME: BZ Flag
