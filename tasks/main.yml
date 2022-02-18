@@ -7,22 +7,27 @@
   become: true
   register: INSTALL_POWERTOOLS
   ignore_errors: true
+- name: "Install RHEL8 codeready"
+  shell: "subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms"
+  become: true
+  when: ansible_distribution == 'RedHat'
 - name: "Install dependencies: dnf-plugins-core, yum-utils"
   shell: "pkcon install -y {{ item }} | true"
   loop:
     - dnf-plugins-core
     - yum-utils
-  when: INSTALL_POWERTOOLS.failed
+  when: ansible_distribution != 'RedHat' and INSTALL_POWERTOOLS.failed
 - name: "Enable powertools repo"
   shell: "yum-config-manager --enable powertools"
   ignore_errors: true
   become: true
   register: ENABLE_POWERTOOLS
+  when: ansible_distribution != 'RedHat'
 - name: "Enable powertools repo"
   shell: "pkcon repo-enable powertools"
   ignore_errors: true
   become: true
-  when: ENABLE_POWERTOOLS.failed
+  when: ansible_distribution != 'RedHat' and ENABLE_POWERTOOLS is defined and ENABLE_POWERTOOLS.failed
 - name: "Install dependencies: {{ APP_DEPENDENCIES | join(' ') }}"
   package:
     name: "{{ APP_DEPENDENCIES }}"
