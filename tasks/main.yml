@@ -51,6 +51,7 @@
     repo: "{{ APP_REPO }}"
     dest: "{{ APP_SRC }}"
     version: "{{ APP_TAG }}"
+  ignore_errors: true
   when: not APP_README_PATH.stat.exists
   register: CLONE_REPO
 - name: "Clone the {{ APP_REPO }} source code into {{ APP_SRC }}"
