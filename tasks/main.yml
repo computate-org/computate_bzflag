@@ -51,8 +51,14 @@
     repo: "{{ APP_REPO }}"
     dest: "{{ APP_SRC }}"
     version: "{{ APP_TAG }}"
-    accept_hostkey: true
   when: not APP_README_PATH.stat.exists
+  register: CLONE_REPO
+- name: "Clone the {{ APP_REPO }} source code into {{ APP_SRC }}"
+  ansible.builtin.git:
+    repo: "{{ APP_REPO | replace('git@github.com:', 'https://github.com/') }}"
+    dest: "{{ APP_SRC }}"
+    version: "{{ APP_TAG }}"
+  when: not APP_README_PATH.stat.exists and CLONE_REPO.failed
 - name: "Clone the {{ APP_REPO }} source code into {{ APP_SRC }}"
   ansible.builtin.git:
     repo: "{{ APP_REPO }}"
