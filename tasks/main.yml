@@ -47,7 +47,14 @@
     path: "{{ APP_README }}"
   register: APP_README_PATH
 - name: "Clone the {{ APP_REPO }} source code into {{ APP_SRC }}"
-  git:
+  ansible.builtin.git:
+    repo: "{{ APP_REPO }}"
+    dest: "{{ APP_SRC }}"
+    version: "{{ APP_TAG }}"
+    accept_hostkey: true
+  when: not APP_README_PATH.stat.exists
+- name: "Clone the {{ APP_REPO }} source code into {{ APP_SRC }}"
+  ansible.builtin.git:
     repo: "{{ APP_REPO }}"
     dest: "{{ APP_SRC }}"
     version: "{{ APP_TAG }}"
