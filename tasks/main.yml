@@ -60,12 +60,6 @@
     dest: "{{ APP_SRC }}"
     version: "{{ APP_TAG }}"
   when: not APP_README_PATH.stat.exists and CLONE_REPO.failed
-- name: "Clone the {{ APP_REPO }} source code into {{ APP_SRC }}"
-  ansible.builtin.git:
-    repo: "{{ APP_REPO }}"
-    dest: "{{ APP_SRC }}"
-    version: "{{ APP_TAG }}"
-  when: not APP_README_PATH.stat.exists
 - name: "Run the autogen.sh script in {{ APP_SRC }}"
   shell:
     cmd: ./autogen.sh
