@@ -30,7 +30,7 @@ APP_PREFIX: "/home/{{ APP_USER }}/.local"
 APP_SRC: "{{ APP_PREFIX }}/src/{{ APP_NAME  }}"
 APP_SHARE: "{{ APP_PREFIX }}/share/{{ APP_NAME  }}"
 APP_REPO_SSH: git@github.com:BZFlag-Dev/bzflag.git
-APP_REPO_HTTPS: "{{ APP_REPO | replace('git@github.com:', 'https://github.com/') }}"
+APP_REPO_HTTPS: "{{ APP_REPO_SSH | replace('git@github.com:', 'https://github.com/') }}"
 APP_TAG: v2.4.22
 APP_DESKTOP: "{{ APP_PREFIX }}/share/applications/{{ APP_NAME }}.desktop"
 APP_README: "{{ APP_SRC }}/README.md"
