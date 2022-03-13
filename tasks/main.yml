@@ -19,17 +19,17 @@
   stat:
     path: "{{ APP_README }}"
   register: APP_README_PATH
-- name: "Clone the {{ APP_REPO }} source code into {{ APP_SRC }}"
+- name: "Clone the {{ APP_REPO_SSH }} source code into {{ APP_SRC }}"
   ansible.builtin.git:
-    repo: "{{ APP_REPO }}"
+    repo: "{{ APP_REPO_SSH }}"
     dest: "{{ APP_SRC }}"
     version: "{{ APP_TAG }}"
   ignore_errors: true
   when: not APP_README_PATH.stat.exists
   register: CLONE_REPO
-- name: "Clone the {{ APP_REPO | replace('git@github.com:', 'https://github.com/') }} source code into {{ APP_SRC }}"
+- name: "Clone the {{ APP_REPO_HTTPS }} source code into {{ APP_SRC }}"
   ansible.builtin.git:
-    repo: "{{ APP_REPO | replace('git@github.com:', 'https://github.com/') }}"
+    repo: "{{ APP_REPO_HTTPS }}"
     dest: "{{ APP_SRC }}"
     version: "{{ APP_TAG }}"
   when: not APP_README_PATH.stat.exists and CLONE_REPO.failed
