@@ -15,6 +15,7 @@
   file:
     name: "{{ APP_SRC }}"
     state: directory
+  become: "{{ APP_ROOT }}"
 - name: "Check for the README file {{ APP_README }}"
   stat:
     path: "{{ APP_README }}"
@@ -49,9 +50,11 @@
   shell:
     cmd: make install
     chdir: "{{ APP_SRC }}"
+  become: "{{ APP_ROOT }}"
 - name: "Create the launcher {{ APP_DESKTOP }}"
   template:
     src: app.desktop
     dest: "{{ APP_DESKTOP }}"
     mode: 0775
+  become: "{{ APP_ROOT }}"
 

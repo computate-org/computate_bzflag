@@ -27,6 +27,7 @@ APP_COMMENT: Battle enemy tanks
 APP_USER: "{{ lookup('env', 'USER') }}"
 APP_GROUP: "{{ APP_USER }}"
 APP_PREFIX: "/home/{{ APP_USER }}/.local"
+APP_ROOT: "{{ false if APP_PREFIX is regex('^/home') else true }}"
 APP_SRC: "{{ APP_PREFIX }}/src/{{ APP_NAME  }}"
 APP_SHARE: "{{ APP_PREFIX }}/share/{{ APP_NAME  }}"
 APP_REPO_SSH: git@github.com:BZFlag-Dev/bzflag.git
