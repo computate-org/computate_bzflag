@@ -1,4 +1,10 @@
 
+# Install prerequisites
+
+Install this Ansible role: 
+
+https://github.com/computate-org/computate_powertools
+
 # Install the bzflag ansible role
 
 ```bash
