@@ -22,7 +22,7 @@ APP_NAME: bzflag
 APP_DISPLAY_NAME: BZ Flag
 APP_GENERIC_NAME: Tank Battle Game
 APP_COMMENT: Battle enemy tanks
-APP_USER: "{{ lookup('env', 'USER') }}"
+APP_USER: "root"
 APP_GROUP: "{{ APP_USER }}"
 APP_PREFIX: "/usr/local"
 APP_ROOT: "true"
