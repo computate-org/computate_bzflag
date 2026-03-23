@@ -14,6 +14,7 @@
   stat:
     path: "{{ APP_README }}"
   register: APP_README_PATH
+  become: "{{ APP_ROOT }}"
 - name: "Clone the {{ APP_REPO_SSH }} source code into {{ APP_SRC }}"
   ansible.builtin.git:
     repo: "{{ APP_REPO_SSH }}"
@@ -22,24 +23,29 @@
   ignore_errors: true
   when: not APP_README_PATH.stat.exists
   register: CLONE_REPO
+  become: "{{ APP_ROOT }}"
 - name: "Clone the {{ APP_REPO_HTTPS }} source code into {{ APP_SRC }}"
   ansible.builtin.git:
     repo: "{{ APP_REPO_HTTPS }}"
     dest: "{{ APP_SRC }}"
     version: "{{ APP_TAG }}"
   when: not APP_README_PATH.stat.exists and CLONE_REPO.failed
+  become: "{{ APP_ROOT }}"
 - name: "Run the autogen.sh script in {{ APP_SRC }}"
   shell:
     cmd: ./autogen.sh
     chdir: "{{ APP_SRC }}"
+  become: "{{ APP_ROOT }}"
 - name: "Run the configure script in {{ APP_SRC }}"
   shell:
     cmd: "./configure --prefix {{ APP_PREFIX }}"
     chdir: "{{ APP_SRC }}"
+  become: "{{ APP_ROOT }}"
 - name: "Run the make script in {{ APP_SRC }}"
   shell:
     cmd: make
     chdir: "{{ APP_SRC }}"
+  become: "{{ APP_ROOT }}"
 - name: "Run the make install script in {{ APP_SRC }}"
   shell:
     cmd: make install
